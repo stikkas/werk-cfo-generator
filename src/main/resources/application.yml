@@ -1,0 +1,9 @@
+spring:
+  main:
+    banner-mode: off
+  kafka:
+    bootstrap-servers: kafka-1679238757:9092
+
+#    url: "psql:postgresql-1679290425:5432"
+server:
+  port: 8080
