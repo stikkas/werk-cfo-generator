@@ -1,39 +1,22 @@
 package ms.action.werkcfogen.model
 
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
 
-@Entity
-@Table(name = "cfo", schema = "org")
 class Cfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
 
-    @Column(name = "cfo_id")
     var cfoId: Int = 0
 
-    @Column(name = "last_modified_datetime")
     lateinit var lastModifiedDatetime: LocalDateTime
 
-    @Column(name = "last_modified_type")
     lateinit var lastModifiedType: String
 
-    @Column(name = "cfo_type")
     var cfoType: String? = null
 
-    @Column(name = "format")
     var format: String? = null
 
-    @Column(name = "full_name_director")
     var fullNameDirector: String? = null
 
-    @Column(name = "mobile_phone_director")
     var mobilePhoneDirector: String? = null
 
     override fun equals(other: Any?): Boolean {
@@ -43,13 +26,13 @@ class Cfo {
         other as Cfo
 
         return (id == other.id) &&
-            (cfoId == other.cfoId) &&
-            (lastModifiedDatetime == other.lastModifiedDatetime) &&
-            (lastModifiedType == other.lastModifiedType) &&
-            (cfoType == other.cfoType) &&
-            (format == other.format) &&
-            (fullNameDirector == other.fullNameDirector) &&
-            (mobilePhoneDirector == other.mobilePhoneDirector)
+                (cfoId == other.cfoId) &&
+                (lastModifiedDatetime == other.lastModifiedDatetime) &&
+                (lastModifiedType == other.lastModifiedType) &&
+                (cfoType == other.cfoType) &&
+                (format == other.format) &&
+                (fullNameDirector == other.fullNameDirector) &&
+                (mobilePhoneDirector == other.mobilePhoneDirector)
     }
 
     override fun hashCode(): Int {
