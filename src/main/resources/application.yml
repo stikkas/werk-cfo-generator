@@ -2,7 +2,13 @@ spring:
   main:
     banner-mode: off
   kafka:
-    bootstrap-servers: kafka-1679238757:9092
+    bootstrap-servers: kafka:9092
 
 server:
   port: 8080
+
+app:
+  kafka:
+    topic:
+      cfo: org_cdc_polka_test.public.ucfo
+      werk: org_cdc_polka_test.public.uwerks

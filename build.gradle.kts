@@ -43,6 +43,7 @@ jib {
         image = "docker://amazoncorretto:17-alpine"
     }
     to {
-        image = "localhost:50002/${rootProject.name}:$version"
+//        image = "localhost:50002/${rootProject.name}:$version"
+        image = "stikkas/${rootProject.name}:$version"
     }
 }

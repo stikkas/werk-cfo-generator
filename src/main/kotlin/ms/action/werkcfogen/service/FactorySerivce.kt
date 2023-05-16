@@ -2,20 +2,22 @@ package ms.action.werkcfogen.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlin.random.Random
-import ms.action.werkcfogen.dto.After
-import ms.action.werkcfogen.dto.Before
-import ms.action.werkcfogen.dto.Employee
-import ms.action.werkcfogen.dto.KafkaMessage
-import ms.action.werkcfogen.dto.MetaData
+import ms.action.werkcfogen.model.After
+import ms.action.werkcfogen.model.Before
+import ms.action.werkcfogen.model.Employee
+import ms.action.werkcfogen.model.KafkaMessage
+import ms.action.werkcfogen.model.MetaData
 import org.instancio.Instancio
-import org.instancio.Select
+import org.instancio.Select.field
 import org.springframework.stereotype.Service
+
+private const val MAX_SIZE = 10
+private const val MAX_ID_VALUE = 1000L
+private val operations = listOf("c", "u", "d")
 
 @Service
 class FactorySerivce(private val om: ObjectMapper) : FactoryServiceI {
-    private val operations = listOf("c", "u", "d")
     private val random = Random(System.currentTimeMillis())
-    private val maxSize = 10
 
     override fun createMessage(): KafkaMessage {
         val operation = operations[random.nextInt(0, operations.size)]
@@ -28,26 +30,33 @@ class FactorySerivce(private val om: ObjectMapper) : FactoryServiceI {
     }
 
     private fun createBefore(): Before = Instancio.of(Before::class.java)
-        .set(
-            Select.field("metaData"),
-            om.writeValueAsString(Instancio.create(MetaData::class.java))
-        )
+        .set(field(Before::werkId.name), random.nextLong(MAX_ID_VALUE))
+        .set(field(Before::cfoId.name), random.nextLong(MAX_ID_VALUE))
         .create()
 
     private fun createAfter(): After {
-        val amountOfEmployees = random.nextInt(0, maxSize)
-        val employees = if (amountOfEmployees == 0) null else Instancio.ofList(Employee::class.java)
-            .size(amountOfEmployees)
-            .create()
+        val amountOfEmployees = random.nextInt(0, MAX_SIZE)
+        val employees = if (amountOfEmployees == 0) null else (1..amountOfEmployees).map {
+            Instancio.of(Employee::class.java)
+                .create()
+        }
         return Instancio.of(After::class.java)
             .set(
-                Select.field("metaData"),
+                field("metaData"),
                 om.writeValueAsString(Instancio.create(MetaData::class.java))
             )
             .set(
-                Select.field("employees"),
+                field("employees"),
                 employees?.let { om.writeValueAsString(it) }
             )
             .create()
     }
 }
+/*
+3.2.4 {
+  5.1. Контракт internship/event
+  6.2. Контракт internship/event (PUT)
+  7.2. Контракт internship/event (DELETE)
+}
+TS.7.2.1 Нижний слой для хранения данных HR НСИ
+*/

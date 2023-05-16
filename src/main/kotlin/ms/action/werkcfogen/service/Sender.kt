@@ -1,7 +1,7 @@
 package ms.action.werkcfogen.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import ms.action.werkcfogen.dto.KafkaMessage
+import ms.action.werkcfogen.model.KafkaMessage
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
