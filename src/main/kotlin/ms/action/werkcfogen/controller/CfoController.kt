@@ -17,7 +17,7 @@ class CfoController(
 ) {
 
     @PostMapping
-    fun generate(): KafkaMessage {
+    suspend fun generate(): KafkaMessage {
         val message = factory.createMessage()
         sender.send(topic, message)
         return message
